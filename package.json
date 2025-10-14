@@ -2,7 +2,10 @@
   "name": "line-desktop-mcp",
   "version": "1.0.0",
   "description": "MCP Server for LINE Desktop Automation via GUI scripting",
-  "main": "src/server.js",
+  "main": "./src/server.js",
+  "bin": {
+    "line-desktop-mcp": "./src/server.js"
+  },
   "type": "module",
   "scripts": {
     "start": "node src/server.js",
