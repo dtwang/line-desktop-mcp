@@ -1,6 +1,6 @@
 {
   "name": "line-desktop-mcp",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "MCP Server for LINE Desktop Automation via GUI scripting",
   "main": "./src/server.js",
   "bin": {
