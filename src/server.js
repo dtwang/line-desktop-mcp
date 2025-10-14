@@ -11,7 +11,56 @@ import {
   McpError,
 } from '@modelcontextprotocol/sdk/types.js';
 
+import { platform } from 'os';
+import { execSync } from 'child_process';
+import fs from 'fs';
+import path from 'path';
+
 import { LineAutomation } from './automation/line-automation.js';
+
+// 首次執行時的設定檢查
+async function firstRunSetup() {
+  const configMarker = path.join(process.env.HOME || process.env.USERPROFILE, '.line-mcp-setup-complete');
+  
+  // 如果已經設定過，跳過
+  if (fs.existsSync(configMarker)) {
+    return;
+  }
+
+  console.log('\n🔧 First-time setup...\n');
+
+  let allDependenciesInstalled = true;
+
+  // Windows: 檢查 AutoHotkey
+  if (platform() === 'win32') {
+    try {
+      execSync('autohotkey.exe /?', { stdio: 'ignore' });
+      console.log('✅ AutoHotkey found');
+    } catch {
+      console.warn('⚠️ AutoHotkey not installed');
+      console.warn('Please install from: https://www.autohotkey.com/');
+      allDependenciesInstalled = false;
+    }
+  }
+  
+  // macOS: 檢查 cliclick
+  if (platform() === 'darwin') {
+    try {
+      execSync('which cliclick', { stdio: 'ignore' });
+      console.log('✅ cliclick found');
+    } catch {
+      console.warn('⚠️  cliclick not installed');
+      console.warn('Install with: brew install cliclick');
+      allDependenciesInstalled = false;
+    }
+  }
+
+  // 標記為已設定
+  if (allDependenciesInstalled)
+    fs.writeFileSync(configMarker, new Date().toISOString());
+
+  console.log('\n✅ Setup complete!\n');
+}
 
 class LineDesktopMCPServer {
   constructor() {
@@ -337,6 +386,9 @@ class LineDesktopMCPServer {
     console.error('LINE Desktop MCP Server running on stdio');
   }
 }
+
+// 首次執行時的設定檢查
+await firstRunSetup();
 
 // Start the server
 const server = new LineDesktopMCPServer();

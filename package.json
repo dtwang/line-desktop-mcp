@@ -10,8 +10,7 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "node --watch src/server.js",
-    "test": "node test/test.js",
-    "postinstall": "node scripts/postinstall.js"
+    "test": "node test/test.js"
   },
   "keywords": [
     "mcp",
