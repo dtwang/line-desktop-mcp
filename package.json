@@ -42,7 +42,7 @@
     "darwin"
   ],
   "files": [
-    "dist",
+    "src",
     "scripts",
     "setup-claude-extension.bat",
     "setup-claude-extension.sh"
