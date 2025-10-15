@@ -101,7 +101,7 @@ async function firstRunSetup() {
         // 使用 Homebrew 安裝 cliclick (不自動更新 Homebrew)
         console.error('Installing cliclick with: brew install cliclick');
         execSync('brew install cliclick', { 
-          stdio: 'ignore',
+          stdio: ['ignore', 'ignore', 'inherit'],
           env: { ...process.env, HOMEBREW_NO_AUTO_UPDATE: '1' }
         });
         
