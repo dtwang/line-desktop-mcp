@@ -39,7 +39,9 @@ LINE Desktop MCP 是一個基於 Model Context Protocol 的整合工具，讓 AI
 - **LINE Desktop**：v9.10 或以上版本
 - **Claude Desktop App**：最新版本
 - **Claude 訂閱方案**：Pro 方案
-- **作業系統**：Windows 或 macOS
+- **作業系統**：
+  - Windows 10 或以上版本
+  - macOS Ventura 13.0 或以上版本（需要 AppleScript 支援）
 
 ### 安裝方式
 
@@ -72,7 +74,11 @@ LINE Desktop MCP 是一個基於 Model Context Protocol 的整合工具，讓 AI
    - 使用 Homebrew：`brew install node`
    - 或從官網下載：https://nodejs.org/
 
-2. **設定 Claude Desktop**
+2. **（選擇性）安裝 cliclick**
+   - 如果有安裝 Homebrew，會於啟動時自動安裝
+   - 或手動安裝：`brew install cliclick`
+
+3. **設定 Claude Desktop**
    - 開啟 Claude Desktop 設定檔
    - 在 `mcpServers` 中加入以下設定：
 
@@ -173,7 +179,9 @@ LINE Desktop MCP is an integration tool based on the Model Context Protocol that
 - **LINE Desktop**: v9.10 or above
 - **Claude Desktop App**: Latest version
 - **Claude Subscription**: Pro plan
-- **Operating System**: Windows or macOS
+- **Operating System**:
+  - Windows 10 or above
+  - macOS Ventura 13.0 or above (requires AppleScript support)
 
 ### Installation
 
@@ -206,7 +214,11 @@ LINE Desktop MCP is an integration tool based on the Model Context Protocol that
    - Using Homebrew: `brew install node`
    - Or download from: https://nodejs.org/
 
-2. **Configure Claude Desktop**
+2. **(Optional) Install cliclick**
+   - If Homebrew is installed, it will be automatically installed on startup
+   - Or install manually: `brew install cliclick`
+
+3. **Configure Claude Desktop**
    - Open Claude Desktop configuration file
    - Add the following to `mcpServers`:
 
