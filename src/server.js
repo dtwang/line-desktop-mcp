@@ -24,6 +24,7 @@ async function firstRunSetup() {
   
   // 如果已經設定過，跳過
   if (fs.existsSync(configMarker)) {
+    console.error('configMarker file exists=' + configMarker);
     return;
   }
 
@@ -50,7 +51,7 @@ async function firstRunSetup() {
         fs.unlinkSync(testScriptPath);
       }
     } catch (firstError) {
-      console.warn('AutoHotkey not found in PATH, attempting to setup...');
+      console.error('AutoHotkey not found in PATH, attempting to setup...');
       
       try {
         // 執行 setup-claude-extension.bat 來設定 PATH
@@ -67,11 +68,11 @@ async function firstRunSetup() {
           fs.unlinkSync(testScriptPath);
         }
       } catch (secondError) {
-        console.log('ERROR: AutoHotkey installation could not be detected.');
-        console.log('Please ensure AutoHotkey is installed and added to your system PATH.');
-        console.log('Download from: https://www.autohotkey.com/');
-        console.log(`First attempt error: ${firstError.message}`);
-        console.log(`Second attempt error: ${secondError.message}`);
+        console.error('ERROR: AutoHotkey installation could not be detected.');
+        console.error('Please ensure AutoHotkey is installed and added to your system PATH.');
+        console.error('Download from: https://www.autohotkey.com/');
+        console.error(`First attempt error: ${firstError.message}`);
+        console.error(`Second attempt error: ${secondError.message}`);
         
         // 清理測試檔案
         if (fs.existsSync(testScriptPath)) {
@@ -89,8 +90,8 @@ async function firstRunSetup() {
       execSync('which cliclick', { stdio: 'ignore' });
       console.error('cliclick found');
     } catch {
-      console.warn('cliclick not installed');
-      console.warn('Install with: brew install cliclick');
+      console.error('cliclick not installed');
+      console.error('Install with: brew install cliclick');
       allDependenciesInstalled = false;
     }
   }

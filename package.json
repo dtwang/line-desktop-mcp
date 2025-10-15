@@ -44,8 +44,6 @@
     "src",
     "src/automation",
     "src/service",
-    "scripts",
-    "setup-claude-extension.bat",
-    "setup-claude-extension.sh"
+    "scripts"
   ]
 }
