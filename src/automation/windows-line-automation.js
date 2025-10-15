@@ -121,8 +121,9 @@ ${script}
       WinGetPos &winX, &winY, &winW, &winH, "${this.lineWinTitle}"
       ; Click at position (w-20, h/2) within the window
       CoordMode "Mouse", "Screen"
-      clickX := winX + 30
-      clickY := winY + 110
+      scale := A_ScreenDPI / 96
+      clickX := winX + 30 * scale
+      clickY := winY + 110 * scale
       Click clickX, clickY
       Sleep ${this.delayMid}
       Send "^+f" ; Ctrl+Shift+F to focus search bar
@@ -135,8 +136,8 @@ ${script}
       Sleep ${this.delayMid}
       Send "{Enter}"
       Sleep ${this.delayShort}
-      clickX := winX + 200
-      clickY := winY + 140
+      clickX := winX + 200 * scale
+      clickY := winY + 140 * scale
       Click clickX, clickY
       Sleep ${this.delayMid}
       Return
@@ -159,7 +160,8 @@ ${script}
       WinGetPos &winX, &winY, &winW, &winH, "${this.lineWinTitle}"
       ; Click at position (w-20, h/2) within the window
       CoordMode "Mouse", "Screen"
-      clickX := winX + winW - 20
+      scale := A_ScreenDPI / 96
+      clickX := winX + winW - 20 * scale
       clickY := winY + winH / 2
       Click clickX, clickY
       Sleep ${this.delayShort}
@@ -197,8 +199,9 @@ ${script}
       WinGetPos &winX, &winY, &winW, &winH, "${this.lineWinTitle}"
       ; Click at position (w-20, h/2) within the window
       CoordMode "Mouse", "Screen"
-      clickX := winX + 400
-      clickY := winY + winH - 100
+      scale := A_ScreenDPI / 96
+      clickX := winX + 400 * scale
+      clickY := winY + winH - 100 * scale
       Click clickX, clickY
       Sleep ${this.delayShort}
       Send "{Tab}"
