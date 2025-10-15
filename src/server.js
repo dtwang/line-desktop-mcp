@@ -35,7 +35,7 @@ async function firstRunSetup() {
   if (platform() === 'win32') {
     // 建立測試用的 AHK script
     const testScriptPath = path.join(process.env.TEMP || '.', 'test-ahk-installation.ahk');
-    const testScriptContent = 'MsgBox, AutoHotkey installation detected successfully\nExitApp';
+    const testScriptContent = 'MsgBox "AutoHotkey installation detected successfully"\nExitApp()';
     
     try {
       // 寫入測試 script
