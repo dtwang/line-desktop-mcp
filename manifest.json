@@ -1,0 +1,23 @@
+{
+  "name": "line-desktop-mcp",
+  "version": "1.0.20",
+  "description": "MCP Server for LINE Desktop Automation via GUI scripting",
+  "author": "https://github.com/dtwang",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dtwang/line-desktop-mcp"
+  },
+  "homepage": "https://github.com/dtwang/line-desktop-mcp#readme",
+  "bugs": {
+    "url": "https://github.com/dtwang/line-desktop-mcp/issues"
+  },
+  "keywords": [
+    "mcp",
+    "line",
+    "automation",
+    "gui",
+    "applescript",
+    "desktop"
+  ]
+}
