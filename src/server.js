@@ -27,19 +27,59 @@ async function firstRunSetup() {
     return;
   }
 
-  console.log('\n🔧 First-time setup...\n');
+  console.error('First-time setup...');
 
   let allDependenciesInstalled = true;
 
   // Windows: 檢查 AutoHotkey
   if (platform() === 'win32') {
+    // 建立測試用的 AHK script
+    const testScriptPath = path.join(process.env.TEMP || '.', 'test-ahk-installation.ahk');
+    const testScriptContent = 'MsgBox, AutoHotkey installation detected successfully\nExitApp';
+    
     try {
-      execSync('autohotkey.exe /?', { stdio: 'ignore' });
-      console.log('✅ AutoHotkey found');
-    } catch {
-      console.warn('⚠️ AutoHotkey not installed');
-      console.warn('Please install from: https://www.autohotkey.com/');
-      allDependenciesInstalled = false;
+      // 寫入測試 script
+      fs.writeFileSync(testScriptPath, testScriptContent);
+      
+      // 第一次嘗試執行測試 script
+      execSync(`autohotkey.exe "${testScriptPath}"`, { stdio: 'ignore', timeout: 5000 });
+      console.error('AutoHotkey found');
+      
+      // 清理測試檔案
+      if (fs.existsSync(testScriptPath)) {
+        fs.unlinkSync(testScriptPath);
+      }
+    } catch (firstError) {
+      console.warn('AutoHotkey not found in PATH, attempting to setup...');
+      
+      try {
+        // 執行 setup-claude-extension.bat 來設定 PATH
+        const setupScriptPath = path.join(process.cwd(), 'scripts', 'setup-claude-extension.bat');
+        console.error(`Running setup script: ${setupScriptPath}`);
+        execSync(`"${setupScriptPath}"`, { stdio: 'inherit' });
+        
+        // 再次嘗試執行測試 script
+        execSync(`autohotkey.exe "${testScriptPath}"`, { stdio: 'ignore', timeout: 5000 });
+        console.error('AutoHotkey found after setup');
+        
+        // 清理測試檔案
+        if (fs.existsSync(testScriptPath)) {
+          fs.unlinkSync(testScriptPath);
+        }
+      } catch (secondError) {
+        console.log('ERROR: AutoHotkey installation could not be detected.');
+        console.log('Please ensure AutoHotkey is installed and added to your system PATH.');
+        console.log('Download from: https://www.autohotkey.com/');
+        console.log(`First attempt error: ${firstError.message}`);
+        console.log(`Second attempt error: ${secondError.message}`);
+        
+        // 清理測試檔案
+        if (fs.existsSync(testScriptPath)) {
+          fs.unlinkSync(testScriptPath);
+        }
+        
+        allDependenciesInstalled = false;
+      }
     }
   }
   
@@ -47,9 +87,9 @@ async function firstRunSetup() {
   if (platform() === 'darwin') {
     try {
       execSync('which cliclick', { stdio: 'ignore' });
-      console.log('✅ cliclick found');
+      console.error('cliclick found');
     } catch {
-      console.warn('⚠️  cliclick not installed');
+      console.warn('cliclick not installed');
       console.warn('Install with: brew install cliclick');
       allDependenciesInstalled = false;
     }
@@ -59,7 +99,7 @@ async function firstRunSetup() {
   if (allDependenciesInstalled)
     fs.writeFileSync(configMarker, new Date().toISOString());
 
-  console.log('\n✅ Setup complete!\n');
+  console.error('Setup complete!');
 }
 
 class LineDesktopMCPServer {
