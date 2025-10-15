@@ -1,6 +1,6 @@
 {
   "name": "line-desktop-mcp",
-  "version": "1.0.20",
+  "version": "1.0.21",
   "description": "MCP Server for LINE Desktop Automation via GUI scripting",
   "author": "https://github.com/dtwang",
   "license": "MIT",
