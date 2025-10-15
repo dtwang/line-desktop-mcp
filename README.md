@@ -113,6 +113,16 @@ Claude 會先撰寫訊息內容，等待您確認後再發送。
 
 Claude 會撰寫訊息並自動完成發送動作。
 
+### 使用注意事項
+
+#### 重要提醒
+
+1. **避免干擾自動化操作**  
+   本工具透過圖形使用者介面（GUI）進行自動化操作。在自動化程式執行期間，請勿同時使用滑鼠進行其他操作，以免干擾程式運作。
+
+2. **LINE Desktop 視窗配置要求**  
+   請確保 LINE Desktop 使用「展開聊天視窗」模式。在此模式下，聊天視窗會固定顯示在聊天室清單的右側，而非以獨立視窗方式開啟。
+
 ### 授權條款
 
 本專案採用 MIT 授權條款 - 詳見 [LICENSE.md](LICENSE.md) 檔案
@@ -233,6 +243,16 @@ Please write a greeting and send it to LINE group 'Project Discussion', and send
 ```
 
 Claude will compose the message and automatically complete the sending action.
+
+### Usage Precautions
+
+#### Important Reminders
+
+1. **Avoid Interfering with Automation**  
+   This tool performs automation through the graphical user interface (GUI). During automated operations, please refrain from using the mouse for other tasks to prevent interference with the program's execution.
+
+2. **LINE Desktop Window Configuration**  
+   Please ensure that LINE Desktop is configured in "Expanded Chat Window" mode. In this mode, the chat window remains docked to the right side of the chat list, rather than opening as a separate independent window.
 
 ### License
 
