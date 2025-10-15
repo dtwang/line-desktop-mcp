@@ -41,9 +41,7 @@
     "darwin"
   ],
   "files": [
-    "src",
-    "src/automation",
-    "src/service",
-    "scripts"
+    "src/**/*",
+    "scripts/**/*"
   ]
 }

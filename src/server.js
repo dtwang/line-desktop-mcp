@@ -15,8 +15,13 @@ import { platform } from 'os';
 import { execSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
 import { LineAutomation } from './automation/line-automation.js';
+
+// 取得當前模組的目錄路徑
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // 首次執行時的設定檢查
 async function firstRunSetup() {
@@ -55,7 +60,7 @@ async function firstRunSetup() {
       
       try {
         // 執行 setup-claude-extension.bat 來設定 PATH
-        const setupScriptPath = path.join(process.cwd(), 'scripts', 'setup-claude-extension.bat');
+        const setupScriptPath = path.join(__dirname, '..', 'scripts', 'setup-claude-extension.bat');
         console.error(`Running setup script: ${setupScriptPath}`);
         execSync(`"${setupScriptPath}"`, { stdio: 'inherit' });
         
