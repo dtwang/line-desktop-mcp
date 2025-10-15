@@ -313,8 +313,9 @@ ${script}
       WinGetPos &winX, &winY, &winW, &winH, "${this.lineWinTitle}"
       ; Click at position (w-20, h/2) within the window
       CoordMode "Mouse", "Screen"
+      scale := A_ScreenDPI / 96
       clickX := winX + winW * (3/4)
-      clickY := winY + winH - 100
+      clickY := winY + winH - 100 * scale
       Click clickX, clickY
       Sleep ${this.delayShort}
       Send "^a"
@@ -383,8 +384,9 @@ ${script}
       WinGetPos &winX, &winY, &winW, &winH, "${this.lineWinTitle}"
       ; Click at position (w-20, h/2) within the window
       CoordMode "Mouse", "Screen"
+      scale := A_ScreenDPI / 96
       clickX := winX + winW * (3/4)
-      clickY := winY + winH - 130
+      clickY := winY + winH - 130 * scale
       Click clickX, clickY
       Sleep ${this.delayShort}
 
@@ -392,8 +394,8 @@ ${script}
       WinGetPos &winX, &winY, &winW, &winH, "${this.lineWinTitle}"
       ; Click at position (w-20, h/2) within the window
       CoordMode "Mouse", "Screen"
-      clickX := winX + winW - 20
-      clickY := winY + winH - 50
+      clickX := winX + winW - 20 * scale
+      clickY := winY + winH - 50 * scale
       Click clickX, clickY
     `;
     try {
