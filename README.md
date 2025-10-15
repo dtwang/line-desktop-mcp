@@ -123,6 +123,9 @@ Claude 會撰寫訊息並自動完成發送動作。
 2. **LINE Desktop 視窗配置要求**  
    請確保 LINE Desktop 使用「展開聊天視窗」模式。在此模式下，聊天視窗會固定顯示在聊天室清單的右側，而非以獨立視窗方式開啟。
 
+3. **多顯示器環境配置**  
+   若您使用多個顯示器,請將 LINE Desktop 應用程式放置於主要顯示器（第一個顯示器）上,以確保自動化功能正常運作。
+
 ### 授權條款
 
 本專案採用 MIT 授權條款 - 詳見 [LICENSE.md](LICENSE.md) 檔案
@@ -253,6 +256,9 @@ Claude will compose the message and automatically complete the sending action.
 
 2. **LINE Desktop Window Configuration**  
    Please ensure that LINE Desktop is configured in "Expanded Chat Window" mode. In this mode, the chat window remains docked to the right side of the chat list, rather than opening as a separate independent window.
+
+3. **Multi-Monitor Setup**  
+   If you are using multiple monitors, please ensure that the LINE Desktop application is positioned on the primary display (first monitor) for the automation to function correctly.
 
 ### License
 

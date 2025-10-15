@@ -94,10 +94,24 @@ async function firstRunSetup() {
     try {
       execSync('which cliclick', { stdio: 'ignore' });
       console.error('cliclick found');
-    } catch {
-      console.error('cliclick not installed');
-      console.error('Install with: brew install cliclick');
-      allDependenciesInstalled = false;
+    } catch (firstError) {
+      console.error('cliclick not installed, attempting to install via Homebrew...');
+      
+      try {
+        // 使用 Homebrew 安裝 cliclick
+        console.error('Installing cliclick with: brew install cliclick');
+        execSync('brew install cliclick', { stdio: 'inherit' });
+        
+        // 驗證安裝是否成功
+        execSync('which cliclick', { stdio: 'ignore' });
+        console.error('cliclick installed successfully');
+      } catch (secondError) {
+        console.error('ERROR: Failed to install cliclick automatically.');
+        console.error('Please ensure Homebrew is installed: https://brew.sh/');
+        console.error('Then manually install cliclick with: brew install cliclick');
+        console.error(`Error: ${secondError.message}`);
+        allDependenciesInstalled = false;
+      }
     }
   }
 
