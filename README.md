@@ -8,6 +8,8 @@
 
 透過 MCP（Model Context Protocol），使 AI 工具能夠與 LINE Desktop 整合，並執行訊息的讀取與發送操作。
 
+![LINE Desktop MCP Demo](doc_media/line-desktop-demo-4x.gif)
+
 ### ⚠️ 重要說明
 
 **這個專案不是 LINE 官方的 line-bot-mcp-server**
@@ -155,6 +157,8 @@ Claude 會撰寫訊息並自動完成發送動作。
 ## English
 
 Integrate AI tools with LINE Desktop through MCP (Model Context Protocol) to enable message reading and sending operations.
+
+![LINE Desktop MCP Demo](doc_media/line-desktop-demo-4x.gif)
 
 ### ⚠️ Important Notice
 

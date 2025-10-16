@@ -30,6 +30,7 @@ test/
 
 # Documentation (optional - remove if you want to include)
 docs/
+doc_media/
 
 # Build artifacts
 dist/
