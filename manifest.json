@@ -1,17 +1,20 @@
 {
+  "manifest_version": "0.2",
   "name": "line-desktop-mcp",
+  "display_name": "LINE Desktop MCP",
   "version": "1.0.21",
   "description": "MCP Server for LINE Desktop Automation via GUI scripting",
-  "author": "https://github.com/dtwang",
+  "author": {
+    "name": "Geoffrey Wang",
+    "url": "https://github.com/dtwang"
+  },
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/dtwang/line-desktop-mcp"
   },
   "homepage": "https://github.com/dtwang/line-desktop-mcp#readme",
-  "bugs": {
-    "url": "https://github.com/dtwang/line-desktop-mcp/issues"
-  },
+  "support": "https://github.com/dtwang/line-desktop-mcp/issues",
   "keywords": [
     "mcp",
     "line",
@@ -19,5 +22,24 @@
     "gui",
     "applescript",
     "desktop"
-  ]
+  ],
+  "server": {
+    "type": "node",
+    "entry_point": "src/server.js",
+    "mcp_config": {
+      "command": "npx",
+      "args": [
+        "line-desktop-mcp@latest"
+      ]
+    }
+  },
+  "compatibility": {
+    "platforms": [
+      "darwin",
+      "win32"
+    ],
+    "runtimes": {
+      "node": ">=18.0.0"
+    }
+  }
 }

@@ -39,6 +39,7 @@ dist/
 build/
 coverage/
 *.tsbuildinfo
+*.mcpb
 
 # Test coverage
 .nyc_output/

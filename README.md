@@ -19,6 +19,14 @@
 - **官方 line-bot-mcp-server**：透過 LINE Messaging API 操作 LINE Bot
 - **本專案 line-desktop-mcp**：透過 MCP 在 Windows 或 Mac 上直接操作 LINE Desktop 應用程式
 
+### 重要聲明
+
+1. **本專案與 LINE 官方無任何關聯**  
+   This project is NOT officially affiliated with LINE.
+
+2. **無需申請 LINE Developers 或使用 Channel Access Token**  
+   本專案透過已經完成登入的 LINE Desktop 應用程式進行操作，不需要申請開發者帳號或 API Token。
+
 ### 關於專案
 
 LINE Desktop MCP 是一個基於 Model Context Protocol 的整合工具，讓 AI 助手（如 Claude Desktop）能夠直接與 LINE Desktop 應用程式互動。透過此專案，您可以：
@@ -158,6 +166,14 @@ If you're looking for the official version, please visit: https://github.com/lin
 
 - **Official line-bot-mcp-server**: Operates LINE Bot through LINE Messaging API
 - **This project line-desktop-mcp**: Directly operates LINE Desktop application on Windows or Mac through MCP
+
+### Important Disclaimer
+
+1. **This project is NOT officially affiliated with LINE**  
+   本專案與 LINE 官方無任何關聯。
+
+2. **No need to apply for LINE Developers or use Channel Access Token**  
+   This project operates through the already logged-in LINE Desktop application, without requiring developer account registration or API tokens.
 
 ### About
 
