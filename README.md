@@ -103,6 +103,38 @@ LINE Desktop MCP 是一個基於 Model Context Protocol 的整合工具，讓 AI
 }
 ```
 
+### 進階設定
+
+#### Streamable HTTP 模式
+
+除了預設的 stdio 模式外，本專案也支援透過 Streamable HTTP 方式運行。此模式特別適合在 **n8n** 等支援 MCP 的平台中使用。
+
+**啟動 Streamable HTTP 模式：**
+
+```bash
+npx line-desktop-mcp@latest --http-mode --port 3000
+```
+
+**參數說明：**
+- `--http-mode`：啟用 Streamable HTTP 模式，使用 HTTP streaming 而非 stdio
+- `--port <port>`：指定 HTTP 伺服器的 port（預設：3000）
+
+**MCP 端點配置：**
+
+本機連接：
+```
+http://127.0.0.1:3000/mcp
+```
+
+Docker 中的 n8n 連接（同一台機器）：
+```
+http://host.docker.internal:3000/mcp
+```
+
+**傳輸方式：**
+- POST 請求：發送 JSON-RPC 訊息並透過 SSE stream 接收回應
+- 支援 session 管理，每個連接會獲得唯一的 session ID
+
 ### 使用方式
 
 在 Claude Desktop 的對話中，您可以使用以下方式操作 LINE：
@@ -252,6 +284,38 @@ LINE Desktop MCP is an integration tool based on the Model Context Protocol that
   }
 }
 ```
+
+### Advanced Configuration
+
+#### Streamable HTTP Mode
+
+In addition to the default stdio mode, this project also supports running via Streamable HTTP. This mode is particularly suitable for use with platforms like **n8n** that support MCP.
+
+**Start Streamable HTTP Mode:**
+
+```bash
+npx line-desktop-mcp@latest --http-mode --port 3000
+```
+
+**Parameters:**
+- `--http-mode`: Enable Streamable HTTP mode, using HTTP streaming instead of stdio
+- `--port <port>`: Specify the HTTP server port (default: 3000)
+
+**MCP Endpoint Configuration:**
+
+Local connection:
+```
+http://127.0.0.1:3000/mcp
+```
+
+n8n in Docker (same machine):
+```
+http://host.docker.internal:3000/mcp
+```
+
+**Transport Method:**
+- POST requests: Send JSON-RPC messages and receive responses via SSE stream
+- Supports session management with unique session IDs for each connection
 
 ### Usage
 

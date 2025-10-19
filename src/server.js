@@ -3,7 +3,8 @@ import 'dotenv/config';
 
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
-// HTTP 伺服器將使用 Express 實現
+import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
+import express from 'express';
 import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
@@ -434,16 +435,173 @@ class LineDesktopMCPServer {
   }
 
 
-  async run() {
-    const transport = new StdioServerTransport();
-    await this.server.connect(transport);
-    console.error('LINE Desktop MCP Server running on stdio');
+  async run(useSSE = false, port = 3000) {
+    if (useSSE) {
+      // 使用 Streamable HTTP 模式（符合 MCP 2025-06-18 規範）
+      const app = express();
+      
+      // 添加 CORS 支援
+      app.use((req, res, next) => {
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+        res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization');
+        if (req.method === 'OPTIONS') {
+          res.sendStatus(200);
+          return;
+        }
+        next();
+      });
+      
+      app.use(express.json());
+      
+      // MCP 端點路徑
+      const endpoint = '/mcp';
+      
+      // 添加全局日誌中間件
+      app.use((req, res, next) => {
+        console.error(`[${new Date().toISOString()}] ${req.method} ${req.url} from ${req.ip}`);
+        console.error(`Headers:`, JSON.stringify(req.headers));
+        next();
+      });
+      
+      // 健康檢查端點
+      app.get('/', (req, res) => {
+        res.json({
+          status: 'running',
+          server: 'LINE Desktop MCP Server',
+          version: '1.0.0',
+          mcp_endpoint: endpoint,
+          transport: 'Streamable HTTP (MCP 2025-06-18)'
+        });
+      });
+      
+      app.get('/health', (req, res) => {
+        res.json({ status: 'ok', timestamp: new Date().toISOString() });
+      });
+      
+      // Session 管理
+      const transports = {};
+      
+      // 處理 MCP 端點的請求  
+      app.all(endpoint, async (req, res) => {
+        console.error(`=== MCP ${req.method} Request ===`);
+        const sessionId = req.headers['mcp-session-id'];
+        console.error(`Session ID: ${sessionId || 'none'}`);
+        
+        try {
+          let transport;
+          
+          if (sessionId && transports[sessionId]) {
+            // 使用現有 session
+            transport = transports[sessionId];
+            console.error(`Reusing session: ${sessionId}`);
+            const body = req.method === 'POST' ? req.body : null;
+            await transport.handleRequest(req, res, body);
+            
+          } else if (req.method === 'POST' && req.body?.method === 'initialize') {
+            // 新的初始化請求
+            console.error(`Body:`, JSON.stringify(req.body));
+            console.error('Creating new StreamableHTTP transport');
+            
+            transport = new StreamableHTTPServerTransport({
+              sessionIdGenerator: () => {
+                const id = Math.random().toString(36).substring(7);
+                console.error(`Generated session ID: ${id}`);
+                return id;
+              },
+              onsessioninitialized: (newSessionId) => {
+                console.error(`Session initialized: ${newSessionId}`);
+                transports[newSessionId] = transport;
+              }
+            });
+            
+            transport.onclose = () => {
+              const sid = transport.sessionId;
+              if (sid) {
+                console.error(`Transport closed: ${sid}`);
+                delete transports[sid];
+              }
+            };
+            
+            transport.onerror = (error) => {
+              console.error(`Transport error:`, error);
+            };
+            
+            // 連接 transport 到 server
+            await this.server.connect(transport);
+            console.error('Server connected to transport');
+            
+            // 處理請求
+            await transport.handleRequest(req, res, req.body);
+            
+          } else {
+            res.status(400).json({
+              jsonrpc: '2.0',
+              error: { code: -32000, message: 'Invalid request or missing session' },
+              id: null
+            });
+          }
+          
+        } catch (error) {
+          console.error('Error in endpoint handler:', error);
+          if (!res.headersSent) {
+            res.status(500).json({
+              jsonrpc: '2.0',
+              error: { code: -32603, message: error.message },
+              id: null
+            });
+          }
+        }
+      });
+      
+      
+      app.listen(port, '0.0.0.0', () => {
+        console.error(`LINE Desktop MCP Server running on Streamable HTTP mode`);
+        console.error(`  Local:   http://127.0.0.1:${port}${endpoint}`);
+        console.error(`  Network: http://0.0.0.0:${port}${endpoint}`);
+        console.error(`  Health:  http://127.0.0.1:${port}/health`);
+        console.error(`Ready to accept connections...`);
+      });
+    } else {
+      // 使用 stdio 模式
+      const transport = new StdioServerTransport();
+      await this.server.connect(transport);
+      console.error('LINE Desktop MCP Server running on stdio');
+    }
   }
+}
+
+// 解析命令列參數
+function parseArgs() {
+  const args = process.argv.slice(2);
+  const config = {
+    sseMode: false,
+    port: 3000
+  };
+  
+  for (let i = 0; i < args.length; i++) {
+    if (args[i] === '--http-mode') {
+      config.sseMode = true;
+    } else if (args[i] === '--port' && i + 1 < args.length) {
+      config.port = parseInt(args[i + 1], 10);
+      i++; // 跳過下一個參數
+    }
+  }
+  
+  return config;
 }
 
 // 首次執行時的設定檢查
 await firstRunSetup();
 
-// Start the server
+// 解析命令列參數並啟動伺服器
+const config = parseArgs();
 const server = new LineDesktopMCPServer();
-server.run().catch(console.error);
+
+if (config.sseMode) {
+  console.error(`Starting server in  Streamable HTTP  mode on port ${config.port}`);
+  server.run(true, config.port).catch(console.error);
+} else {
+  console.error('Starting server in stdio mode');
+  server.run(false).catch(console.error);
+}
