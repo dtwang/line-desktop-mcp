@@ -8,7 +8,9 @@
 
 透過 MCP（Model Context Protocol），使 AI 工具能夠與 LINE Desktop 整合，並執行訊息的讀取與發送操作。
 
-![LINE Desktop MCP Demo](doc_media/line-desktop-demo-4x.gif)
+![LINE Desktop MCP Demo with Claude Desktop](doc_media/line-desktop-demo-4x.gif)
+
+![LINE Desktop MCP Demo with n8n](doc_media/line-desktop-mcp-demo-n8n-2x.gif)
 
 ### ⚠️ 重要說明
 
@@ -135,6 +137,13 @@ http://host.docker.internal:3000/mcp
 - POST 請求：發送 JSON-RPC 訊息並透過 SSE stream 接收回應
 - 支援 session 管理，每個連接會獲得唯一的 session ID
 
+**n8n 工作流程範例：**
+
+如果您想在 n8n 中使用 LINE Desktop MCP，可以下載我們提供的範例工作流程檔案：
+- 📥 [下載 n8n 工作流程範例](doc_media/LINE-Desktop-MCP-Demo-chatbot-sample.json)
+
+此範例展示如何在 n8n 中整合 LINE Desktop MCP 建立聊天機器人工作流程。
+
 ### 使用方式
 
 在 Claude Desktop 的對話中，您可以使用以下方式操作 LINE：
@@ -190,7 +199,9 @@ Claude 會撰寫訊息並自動完成發送動作。
 
 Integrate AI tools with LINE Desktop through MCP (Model Context Protocol) to enable message reading and sending operations.
 
-![LINE Desktop MCP Demo](doc_media/line-desktop-demo-4x.gif)
+![LINE Desktop MCP Demo with Claude Desktop](doc_media/line-desktop-demo-4x.gif)
+
+![LINE Desktop MCP Demo with n8n](doc_media/line-desktop-mcp-demo-n8n-2x.gif)
 
 ### ⚠️ Important Notice
 
@@ -316,6 +327,13 @@ http://host.docker.internal:3000/mcp
 **Transport Method:**
 - POST requests: Send JSON-RPC messages and receive responses via SSE stream
 - Supports session management with unique session IDs for each connection
+
+**n8n Workflow Example:**
+
+If you want to use LINE Desktop MCP in n8n, you can download our sample workflow file:
+- 📥 [Download n8n Workflow Example](doc_media/LINE-Desktop-MCP-Demo-chatbot-sample.json)
+
+This example demonstrates how to integrate LINE Desktop MCP in n8n to create a chatbot workflow.
 
 ### Usage
 

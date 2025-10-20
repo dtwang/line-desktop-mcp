@@ -1,0 +1,173 @@
+{
+  "name": "LINE-Desktop-MCP-Demo-chatbot",
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Check the latest messages and discussions in the LINE group [Project Discussion], determine whether a reply is needed based on the rules below, send an appropriate response automatically via LINE-desktop-MCP, and then terminate the agent execution after completion.\n\n---\n\n檢查 line group [專案討論] 中的最新對話與討論內容, 依規則判斷並給予適當的對話回應並自動送出. 完成後即結束 agent 執行",
+        "options": {
+          "systemMessage": "You are C3 (West-3), a chatbot assistant working for a sales manager.\nYou can use the LINE-desktop-MCP tool to read conversations in the LINE group, detect whether any response is needed, and send suitable replies using the same tool.\n\nPlease follow these rules to decide whether to send a message\n\n(You don’t need to output these reasoning steps through LINE MCP)\n1. Check the most recent speaker.\n　If it’s yourself (C3), do not reply, to avoid flooding the chat.\n2. Avoid replying repeatedly to the same question if it has already been answered.\n\n　If the customer repeats a question, only respond if new information is needed.\n3. When encountering a question you’re not sure about, politely acknowledge it and tag @Max to ask for his input.\n\nGroup members\n1. Geoffrey Wang — Client\n2. Max — Sales Manager\n3. C3 — Max’s AI assistant bot\n\nTone and Style\n1. Keep replies polite and professional, concise, and free from unnecessary filler words.\n2. Respond in the same language used by the person who asked the question.\n\nBasic Q&A Knowledge Base (can be extended via RAG or other tools)\n1. The ongoing project Project.T is expected to enter UAT on November 5.\n2. The company has been established for 3 years.\n3. Available meeting times next week: Thursday afternoon and Friday morning.\n4. Training courses beyond the project’s included hours are subject to separate quotation and billing.\n\n---\n\n你是一位業務主管的小幫手機器人, 代號C3 (西三), 你會使用 LINE-desktop-MCP 工具, 讀取 LINE群組中的對話, 以便了解有沒有需要回應的地方. 並用 LINE-desktop-MCP 工具送出適當回應. \n\n## 請遵守以下規則, 決定要不要送出對話, 但不需要將這些規則的過程透過 LINE MCP 送出\n\n1. 需先檢查近期最後一個發言者, 如果是自己C3, 則不要發言, 避免造成洗頻\n2. 已經回覆過的問題, 避免主動重複回覆. 如果客戶重複\n3. 遇到不確定答案的問題, 除了先給予禮貌性地回覆外, 也可以 tag @max 提醒他出面回答\n\n## 群組中的人\n1. Geoffrey Wang: 客戶\n2. Max: 業務主管\n3. C3: Max的AI機器人小幫手\n\n## 角色用語風格\n1. 帶有專業與禮貌的回覆, 並保持簡短避免不需要的贅字太多\n2. 依照發問者的所使用語言做回覆\n\n## 簡易 QA 問題集 (可再透過 RAG 或其他工具擴充)\n1. 進行中的專案 Project.T , 預計 11/5 可以進入 UAT\n2. 公司成立 3 年\n3. 下周可以開會的時間, 週四下午與周五早上\n4. 教育訓練課程, 除專案中所附帶時數外, 其餘需另外報價計費"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "5b62ffe4-20b6-4aaa-ac2c-965a2c414e24",
+      "name": "AI Agent",
+      "alwaysOutputData": true,
+      "executeOnce": true,
+      "notesInFlow": true
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-5-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-5-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        80,
+        240
+      ],
+      "id": "ebbbd39b-5032-43d2-9268-03b5d5116a65",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "meIkVC4TjFJjB6cN",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "7788"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        256,
+        240
+      ],
+      "id": "4f37b772-86e9-4143-acd3-0ba75fcdaebf",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "endpointUrl": "http://host.docker.internal:3000/mcp",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.mcpClientTool",
+      "typeVersion": 1.2,
+      "position": [
+        480,
+        240
+      ],
+      "id": "f61e06f6-7981-4bd0-a64c-e504dbc3bba4",
+      "name": "MCP Client",
+      "notes": "LINE-Deskto-MCP:\n\nhttps://github.com/dtwang/line-desktop-mcp"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 10
+            },
+            {}
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        16,
+        0
+      ],
+      "id": "337f3aa7-dc83-440b-93ea-38d29691bbf7",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "content": "📌 **LINE 業務小助手 Chatbot**  \n自動檢查 LINE 群組訊息並由 AI 生成回覆。  \n使用 [LINE-Desktop-MCP](https://github.com/dtwang/line-desktop-mcp) 控制 LINE 桌面版，  每 10 分鐘觸發檢查，可自訂模型與語氣。\n\n適合客服、社群與業務自動化應用。  \n\n🤖 **LINE Business Assistant Chatbot**  \nMonitors LINE chats and uses AI to reply automatically. Powered by [LINE-Desktop-MCP](https://github.com/dtwang/line-desktop-mcp). Runs every 10 min, customizable model and tone.  \n\nPerfect for customer support and group automation.",
+        "height": 352,
+        "width": 304
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -352,
+        0
+      ],
+      "id": "cc0ca8fa-76ce-4845-a484-1dbf93498c62",
+      "name": "Sticky Note"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MCP Client": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "33e9a213-f8ef-4f17-9ff1-3ee00ecfed64",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "dba89d1568a32c21e996c26632756a365032fe4662453effab6ef760826ee449"
+  },
+  "id": "XH1zyo9FmqvJO18z",
+  "tags": []
+}
