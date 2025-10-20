@@ -48,12 +48,21 @@ LINE Desktop MCP 是一個基於 Model Context Protocol 的整合工具，讓 AI
 
 ### 系統需求
 
+#### 基本需求
+
 - **LINE Desktop**：v9.10 或以上版本
-- **Claude Desktop App**：最新版本
-- **Claude 訂閱方案**：Pro 方案
 - **作業系統**：
   - Windows 10 或以上版本
   - macOS Ventura 13.0 或以上版本（需要 AppleScript 支援）
+
+#### 與 Claude Desktop 整合
+
+- **Claude Desktop App**：最新版本
+- **Claude 訂閱方案**：Pro 方案
+
+#### 與 n8n 整合
+
+- **n8n**：支援 MCP 的版本
 
 ### 安裝方式
 
@@ -239,12 +248,21 @@ LINE Desktop MCP is an integration tool based on the Model Context Protocol that
 
 ### System Requirements
 
+#### Basic Requirements
+
 - **LINE Desktop**: v9.10 or above
-- **Claude Desktop App**: Latest version
-- **Claude Subscription**: Pro plan
 - **Operating System**:
   - Windows 10 or above
   - macOS Ventura 13.0 or above (requires AppleScript support)
+
+#### Integration with Claude Desktop
+
+- **Claude Desktop App**: Latest version
+- **Claude Subscription**: Pro plan
+
+#### Integration with n8n
+
+- **n8n**: Version with MCP support
 
 ### Installation
 
