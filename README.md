@@ -33,7 +33,7 @@
 
 ### 關於專案
 
-LINE Desktop MCP 是一個基於 Model Context Protocol 的整合工具，讓 AI 助手（如 Claude Desktop）能夠直接與 LINE Desktop 應用程式互動。透過此專案，您可以：
+LINE Desktop MCP 是一個基於 Model Context Protocol 的整合工具，讓 AI 工具（如 Claude Desktop, n8n ），能夠直接與 LINE Desktop 應用程式互動。透過此專案，您可以：
 
 - 📖 讀取 LINE 聊天訊息
 - ✉️ 發送 LINE 訊息（手動或自動）
@@ -41,7 +41,7 @@ LINE Desktop MCP 是一個基於 Model Context Protocol 的整合工具，讓 AI
 
 ### 功能特色
 
-- 🤖 **AI 整合**：透過 MCP 協議與 Claude Desktop 等 AI 工具無縫整合
+- 🤖 **AI 整合**：透過 MCP 協議與 Claude Desktop、 n8n 等 AI 工具無縫整合
 - 💬 **訊息操作**：支援讀取和發送 LINE 訊息
 - 🖥️ **桌面整合**：直接與 LINE Desktop 應用程式互動
 - 🔄 **自動化支援**：可選擇手動確認或自動發送訊息
@@ -233,7 +233,7 @@ If you're looking for the official version, please visit: https://github.com/lin
 
 ### About
 
-LINE Desktop MCP is an integration tool based on the Model Context Protocol that allows AI assistants (such as Claude Desktop) to interact directly with the LINE Desktop application. With this project, you can:
+LINE Desktop MCP is an integration tool based on the Model Context Protocol that allows AI tools (such as Claude Desktop, n8n ) to interact directly with the LINE Desktop application. With this project, you can:
 
 - 📖 Read LINE chat messages
 - ✉️ Send LINE messages (manual or automatic)
@@ -241,7 +241,7 @@ LINE Desktop MCP is an integration tool based on the Model Context Protocol that
 
 ### Features
 
-- 🤖 **AI Integration**: Seamlessly integrate with AI tools like Claude Desktop through the MCP protocol
+- 🤖 **AI Integration**: Seamlessly integrate with AI tools like Claude Desktop, n8n through the MCP protocol
 - 💬 **Message Operations**: Support for reading and sending LINE messages
 - 🖥️ **Desktop Integration**: Direct interaction with the LINE Desktop application
 - 🔄 **Automation Support**: Choose between manual confirmation or automatic message sending
